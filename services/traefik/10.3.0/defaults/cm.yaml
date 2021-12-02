@@ -8,6 +8,9 @@ metadata:
 data:
   values.yaml: |
       ---
+      kube-state-metrics:
+        metricLabelsAllowlist:
+          - pods=[*]
       podDisruptionBudget:
         minAvailable: 1
       # Distribute pods to tolerate node or zone failure.
