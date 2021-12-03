@@ -315,6 +315,9 @@ data:
           - /dkp/alertmanager
         pathType: ImplementationSpecific
       alertmanagerSpec:
+        alertmanagerConfigSelector:
+          matchLabels:
+            kommander.d2iq.com/alertmanager-instance: kube-prometheus-stack
         resources:
           limits:
             cpu: 200m
