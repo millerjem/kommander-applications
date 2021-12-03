@@ -102,7 +102,9 @@ data:
               store: memberlist
           rule_path: /tmp/loki/scratch
           alertmanager_url: http://kube-prometheus-stack-alertmanager.${releaseNamespace}.svc.cluster.local:9093
-          external_url: ""
+          # Loki ruler crashes with an empty `external_url`.
+          # FIXME: Come up with something more useful.
+          external_url: "https://foobar.gov"
 
     ingester:
       replicas: 1
@@ -132,6 +134,7 @@ data:
         size: 10Gi
 
     ruler:
+      enabled: true
       replicas: 1
       serviceLabels:
         servicemonitor.kommander.mesosphere.io/path: "metrics"
