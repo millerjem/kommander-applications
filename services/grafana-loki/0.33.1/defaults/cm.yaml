@@ -142,3 +142,22 @@ data:
       persistence:
         enabled: true
         size: 10Gi
+      # FIXME: Use a configmap for storing the rules.
+      #
+      # Alternative: back Loki Ruler with Minio and write rules via Ruler API
+      # - need to address concern of everyone being able to overwrite the rules
+      # while Loki multitenancy is switched off (as it is currently by default).
+      directories:
+        fake:
+          rules1.txt: |
+            groups:
+              - name: foobaz
+                rules:
+                  - alert: FromLoki
+                    expr: |
+                      absent_over_time({log_source="bozydar"}[1s]) > 0
+                    for: 30s
+                    labels:
+                      severity: critical
+                    annotations:
+                      summary: Hello world
